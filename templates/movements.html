@@ -39,24 +39,8 @@
     <tr>
         <td>{{ m.id }}</td>
         <td>{{ m.product_id }}</td>
-        <td>
-            {% set from_loc_name = '-' %}
-            {% for location in locations %}
-                {% if location.location_id == m.from_location %}
-                    {% set from_loc_name = location.name %}
-                {% endif %}
-            {% endfor %}
-            {{ from_loc_name }}
-        </td>
-        <td>
-            {% set to_loc_name = '-' %}
-            {% for location in locations %}
-                {% if location.location_id == m.to_location %}
-                    {% set to_loc_name = location.name %}
-                {% endif %}
-            {% endfor %}
-            {{ to_loc_name }}
-        </td>
+        <td>{{ m.from_location or '-' }}</td>
+        <td>{{ m.to_location or '-' }}</td>
         <td>{{ m.qty }}</td>
         <td>{{ m.timestamp }}</td>
         <td>
@@ -112,4 +96,4 @@ function closeEditModal() {
     document.getElementById('editModal').style.display = 'none';
 }
 </script>
-{% endblock %}
+{% endblock %}   
