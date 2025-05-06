@@ -32,7 +32,7 @@ Before running the app, make sure you have the following installed:
 Clone the repository and install the required dependencies:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/nareshkannasln/Product-Management
 cd <repository-directory>
 pip install -r requirements.txt
 ```
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 1. Create a MySQL database for the application:
 
 ```sql
-CREATE DATABASE inventory_db;
+CREATE DATABASE Product_Management;
 ```
 
 2. Set up the required tables. The script will create the necessary schema on the first run of the app.
