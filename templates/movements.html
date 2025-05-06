@@ -1,0 +1,115 @@
+<!-- templates/movements.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2>Product Movements</h2>
+
+<!-- Movement Form -->
+<form action="/movements/add" method="post">
+    <label>Product:
+        <select name="product_id">
+            {% for p in products %}
+            <option value="{{ p.product_id }}">{{ p.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>From:
+        <select name="from_location">
+            <option value="">--None--</option>
+            {% for l in locations %}
+            <option value="{{ l.location_id }}">{{ l.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>To:
+        <select name="to_location">
+            <option value="">--None--</option>
+            {% for l in locations %}
+            <option value="{{ l.location_id }}">{{ l.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Qty: <input type="number" name="qty" required></label>
+    <button type="submit">Add Movement</button>
+</form>
+
+<!-- Movement Table -->
+<table>
+    <tr><th>ID</th><th>Product</th><th>From</th><th>To</th><th>Qty</th><th>Timestamp</th><th>Actions</th></tr>
+    {% for m in movements %}
+    <tr>
+        <td>{{ m.id }}</td>
+        <td>{{ m.product_id }}</td>
+        <td>
+            {% set from_loc_name = '-' %}
+            {% for location in locations %}
+                {% if location.location_id == m.from_location %}
+                    {% set from_loc_name = location.name %}
+                {% endif %}
+            {% endfor %}
+            {{ from_loc_name }}
+        </td>
+        <td>
+            {% set to_loc_name = '-' %}
+            {% for location in locations %}
+                {% if location.location_id == m.to_location %}
+                    {% set to_loc_name = location.name %}
+                {% endif %}
+            {% endfor %}
+            {{ to_loc_name }}
+        </td>
+        <td>{{ m.qty }}</td>
+        <td>{{ m.timestamp }}</td>
+        <td>
+            <button onclick="openEditModal('{{ m.id }}', '{{ m.product_id }}', '{{ m.from_location or '' }}', '{{ m.to_location or '' }}', '{{ m.qty }}')">Edit</button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- Edit Modal -->
+<div id="editModal" style="display:none;" class="modal">
+    <form action="/movements/edit" method="post">
+        <input type="hidden" name="id" id="edit_id">
+        <label>Product:
+            <select name="product_id" id="edit_product_id">
+                {% for p in products %}
+                <option value="{{ p.product_id }}">{{ p.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>From:
+            <select name="from_location" id="edit_from">
+                <option value="">--None--</option>
+                {% for l in locations %}
+                <option value="{{ l.location_id }}">{{ l.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>To:
+            <select name="to_location" id="edit_to">
+                <option value="">--None--</option>
+                {% for l in locations %}
+                <option value="{{ l.location_id }}">{{ l.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>Qty: <input type="number" name="qty" id="edit_qty" required></label>
+        <button type="submit">Save</button>
+        <button type="button" onclick="closeEditModal()">Cancel</button>
+    </form>
+</div>
+
+<script>
+function openEditModal(id, product_id, from_loc, to_loc, qty) {
+    document.getElementById('edit_id').value = id;
+    document.getElementById('edit_product_id').value = product_id;
+    document.getElementById('edit_from').value = from_loc;
+    document.getElementById('edit_to').value = to_loc;
+    document.getElementById('edit_qty').value = qty;
+    document.getElementById('editModal').style.display = 'block';
+}
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+</script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Locations</h2>
+
+<!-- Add Location Form -->
+<form action="/locations/add" method="post">
+    <label>Location ID: <input type="text" name="location_id" required></label>
+    <label>Name: <input type="text" name="name" required></label>
+    <button type="submit">Add Location</button>
+</form>
+
+<!-- Location Table -->
+<table>
+    <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
+    {% for loc in locations %}
+    <tr>
+        <td>{{ loc.location_id }}</td>
+        <td>{{ loc.name }}</td>
+        <td>
+            <button onclick="openEditModal('{{ loc.location_id }}', '{{ loc.name }}')">Edit</button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- Edit Modal -->
+<div id="editModal" style="display:none;" class="modal">
+    <form action="/locations/edit" method="post">
+        <input type="hidden" name="location_id" id="edit_location_id">
+        <label>Name: <input type="text" name="name" id="edit_name" required></label>
+        <button type="submit">Save</button>
+        <button type="button" onclick="closeEditModal()">Cancel</button>
+    </form>
+</div>
+
+<script>
+function openEditModal(id, name) {
+    document.getElementById('edit_location_id').value = id;
+    document.getElementById('edit_name').value = name;
+    document.getElementById('editModal').style.display = 'block';
+}
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+</script>
+{% endblock %}

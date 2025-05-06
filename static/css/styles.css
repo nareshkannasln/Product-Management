@@ -1,0 +1,154 @@
+/* static/css/styles.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0 20px;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    transition: background-color 0.3s ease;
+}
+
+header {
+    background-color: #0056b3;
+    color: white;
+    padding: 20px 30px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+header:hover {
+    background-color: #003d75;
+}
+
+nav a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #00bcd4;
+}
+
+main {
+    margin-top: 30px;
+    padding: 0 15px;
+}
+
+form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+form:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+form label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+}
+
+input, select, button {
+    padding: 10px 15px;
+    margin-top: 5px;
+    width: 100%;
+    max-width: 350px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, button:focus {
+    border-color: #0056b3;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
+    transform: translateY(-3px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+table:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+    color: #555;
+    transition: background-color 0.3s ease;
+}
+
+th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+td:hover {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(even) td {
+    background-color: #f8f8f8;
+}
+
+tr:nth-child(odd) td {
+    background-color: #ffffff;
+}
+
+tr:nth-child(even):hover td, tr:nth-child(odd):hover td {
+    background-color: #eaeaea;
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+body {
+    animation: fadeIn 1s ease-out;
+}

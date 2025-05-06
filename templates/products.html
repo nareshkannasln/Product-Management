@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Products</h2>
+
+<!-- Add Product Form -->
+<form action="/products/add" method="post">
+    <label>Product ID:
+        <input type="text" name="product_id" pattern="^PID\d{2}$" required title="Product ID must start with 'PID' followed by two digits (e.g., PID01)">
+    </label>
+    <label>Name: <input type="text" name="name" required></label>
+    <button type="submit">Add Product</button>
+</form>
+
+<!-- Product Table -->
+<table>
+    <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
+    {% for p in products %}
+    <tr>
+        <td>{{ p.product_id }}</td>
+        <td>{{ p.name }}</td>
+        <td>
+            <button onclick="openEditModal('{{ p.product_id }}', '{{ p.name }}')">Edit</button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- Edit Modal -->
+<div id="editModal" style="display:none;" class="modal">
+    <form id="editForm" action="/products/edit" method="post">
+        <input type="hidden" name="product_id" id="edit_product_id">
+        <label>Name: <input type="text" name="name" id="edit_name" required></label>
+        <button type="submit">Save</button>
+        <button type="button" onclick="closeEditModal()">Cancel</button>
+    </form>
+</div>
+
+<script>
+function openEditModal(id, name) {
+    document.getElementById('edit_product_id').value = id;
+    document.getElementById('edit_name').value = name;
+    document.getElementById('editModal').style.display = 'block';
+}
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+</script>
+{% endblock %}

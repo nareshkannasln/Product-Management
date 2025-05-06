@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Welcome to the Inventory Management System</h2>
+    <p class="text-center mb-4">This system helps you track products, locations, and product movements between locations.</p>
+
+    <section class="mb-5">
+        <h3 class="text-center mb-3">Features</h3>
+        <ul class="list-unstyled">
+            <li>📦 <strong>Manage Products</strong> – Add, update, and list your inventory items.</li>
+            <li>📍 <strong>Manage Locations</strong> – Define storage locations like warehouses or stores.</li>
+            <li>🔁 <strong>Track Movements</strong> – Monitor product transfers between locations.</li>
+            <li>📊 <strong>View Reports</strong> – Generate summary reports for quick insights.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3 class="text-center mb-3">Navigation</h3>
+        <p class="text-center mb-4">Use the navigation bar above to access different sections. You can:</p>
+        <ul class="list-unstyled">
+            <li>Click <strong>Products</strong> to add/edit product items.</li>
+            <li>Click <strong>Locations</strong> to manage warehouses or storage areas.</li>
+            <li>Click <strong>Movements</strong> to record item transfers.</li>
+            <li>Click <strong>Report</strong> to see current stock levels per location.</li>
+        </ul>
+    </section>
+</div>
+{% endblock %}
