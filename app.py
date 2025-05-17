@@ -4,7 +4,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-
+# MySQL Database connection
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -14,21 +14,27 @@ db = mysql.connector.connect(
 cursor = db.cursor(dictionary=True)
 
 
+# Root/Home page
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Home
+# Home page (duplicate route)
 @app.route('/index')
 def home():
     return render_template('index.html')
-# Products
+
+
+# ========================== Products ==========================
+
+# Product list page
 @app.route('/products')
 def products():
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()
     return render_template('products.html', products=products)
 
+# Add new product
 @app.route('/products/add', methods=['POST'])
 def add_product():
     product_id = request.form['product_id']
@@ -37,6 +43,7 @@ def add_product():
     db.commit()
     return redirect(url_for('products'))
 
+# Edit existing product
 @app.route('/products/edit', methods=['POST'])
 def edit_product():
     product_id = request.form['product_id']
@@ -46,15 +53,16 @@ def edit_product():
     return redirect(url_for('products'))
 
 
+# ========================== Locations ==========================
 
-
-# Locations
+# Location list page
 @app.route('/locations')
 def locations():
     cursor.execute("SELECT * FROM locations")
     locations = cursor.fetchall()
     return render_template('locations.html', locations=locations)
 
+# Add new location
 @app.route('/locations/add', methods=['POST'])
 def add_location():
     location_id = request.form['location_id']
@@ -63,6 +71,7 @@ def add_location():
     db.commit()
     return redirect(url_for('locations'))
 
+# Edit existing location
 @app.route('/locations/edit', methods=['POST'])
 def edit_location():
     location_id = request.form['location_id']
@@ -72,19 +81,50 @@ def edit_location():
     return redirect(url_for('locations'))
 
 
+# ========================== Movements ==========================
 
-
-# Movements
+# Movement list page
 @app.route('/movements')
 def movements():
+    # Fetch all product movements
     cursor.execute("SELECT * FROM product_movements ORDER BY timestamp DESC")
     movements = cursor.fetchall()
+
+    # Fetch products and map to dictionary
     cursor.execute("SELECT * FROM products")
     products = cursor.fetchall()
+    product_dict = {p['product_id']: p['name'] for p in products}
+
+    # Fetch locations and map to dictionary
     cursor.execute("SELECT * FROM locations")
     locations = cursor.fetchall()
-    return render_template('movements.html', movements=movements, products=products, locations=locations)
+    location_dict = {l['location_id']: l['name'] for l in locations}
 
+    return render_template(
+        'movements.html',
+        movements=movements,
+        products=products,
+        locations=locations,
+        product_dict=product_dict,
+        location_dict=location_dict
+    )
+
+# Add new product movement
+@app.route('/movements/add', methods=['POST'])
+def add_movement():
+    product_id = request.form['product_id']
+    from_location = request.form.get('from_location') or None
+    to_location = request.form.get('to_location') or None
+    qty = int(request.form['qty'])
+    timestamp = datetime.now()
+    cursor.execute("""
+        INSERT INTO product_movements (product_id, from_location, to_location, qty, timestamp)
+        VALUES (%s, %s, %s, %s, %s)
+    """, (product_id, from_location, to_location, qty, timestamp))
+    db.commit()
+    return redirect(url_for('movements'))
+
+# Edit existing product movement
 @app.route('/movements/edit', methods=['POST'])
 def edit_movement():
     movement_id = request.form['id']
@@ -101,24 +141,12 @@ def edit_movement():
     return redirect(url_for('movements'))
 
 
-@app.route('/movements/add', methods=['POST'])
-def add_movement():
-    product_id = request.form['product_id']
-    from_location = request.form.get('from_location') or None
-    to_location = request.form.get('to_location') or None
-    qty = int(request.form['qty'])
-    timestamp = datetime.now()
-    cursor.execute("""
-        INSERT INTO product_movements (product_id, from_location, to_location, qty, timestamp)
-        VALUES (%s, %s, %s, %s, %s)
-    """, (product_id, from_location, to_location, qty, timestamp))
-    db.commit()
-    return redirect(url_for('movements'))
+# ========================== Report ==========================
 
-# Report
+# Report page - shows quantity of products at each location
 @app.route('/report')
 def report():
-    cursor.execute("""
+    cursor.execute("""  
         SELECT 
             p.name AS product_name, 
             l.name AS location_name,
@@ -131,13 +159,12 @@ def report():
         CROSS JOIN locations l
         LEFT JOIN product_movements pm ON pm.product_id = p.product_id
         GROUP BY p.product_id, l.location_id
-        HAVING qty >= 0
+        HAVING qty > 0
     """)
     report = cursor.fetchall()
     return render_template('report.html', report=report)
 
 
-
-
+# Run the Flask app
 if __name__ == '__main__':
-    app.run(debug=True,port = 8001)
+    app.run(debug=True, port=8001)

@@ -38,9 +38,9 @@
     {% for m in movements %}
     <tr>
         <td>{{ m.id }}</td>
-        <td>{{ m.product_id }}</td>
-        <td>{{ m.from_location or '-' }}</td>
-        <td>{{ m.to_location or '-' }}</td>
+        <td>{{ product_dict[m.product_id] }}</td>
+        <td>{{ location_dict[m.from_location] if m.from_location else '-' }}</td>
+        <td>{{ location_dict[m.to_location] if m.to_location else '-' }}</td>
         <td>{{ m.qty }}</td>
         <td>{{ m.timestamp }}</td>
         <td>
@@ -49,6 +49,7 @@
     </tr>
     {% endfor %}
 </table>
+
 
 <!-- Edit Modal -->
 <div id="editModal" style="display:none;" class="modal">
