@@ -8,7 +8,7 @@
     <label>Product:
         <select name="product_id">
             {% for p in products %}
-            <option value="{{ p.product_id }}">{{ p.name }}</option>
+            <option value="{{ p.product_id }}"> {{p.product_id}}, {{ p.name }}</option>
             {% endfor %}
         </select>
     </label>

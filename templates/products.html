@@ -7,19 +7,30 @@
     <label>Product ID:
         <input type="text" name="product_id" pattern="^PID\d{2}$" required title="Product ID must start with 'PID' followed by two digits (e.g., PID01)">
     </label>
-    <label>Name: <input type="text" name="name" required></label>
+    <label>Name:
+        <input type="text" name="name" required >
+    </label>
+    <label>Price:
+        <input type="number" name="price" step="0.01" required>
+    </label>
     <button type="submit">Add Product</button>
 </form>
 
 <!-- Product Table -->
-<table>
-    <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
     {% for p in products %}
     <tr>
         <td>{{ p.product_id }}</td>
         <td>{{ p.name }}</td>
+        <td>{{ p.price }}</td>
         <td>
-            <button onclick="openEditModal('{{ p.product_id }}', '{{ p.name }}')">Edit</button>
+            <button onclick="openEditModal('{{ p.product_id }}', '{{ p.name }}', '{{ p.price }}')">Edit</button>
         </td>
     </tr>
     {% endfor %}
@@ -29,16 +40,22 @@
 <div id="editModal" style="display:none;" class="modal">
     <form id="editForm" action="/products/edit" method="post">
         <input type="hidden" name="product_id" id="edit_product_id">
-        <label>Name: <input type="text" name="name" id="edit_name" required></label>
+        <label>Name:
+            <input type="text" name="name" id="edit_name" required>
+        </label>
+        <label>Price:
+            <input type="number" name="price" id="edit_price" step="0.01" required>
+        </label>
         <button type="submit">Save</button>
         <button type="button" onclick="closeEditModal()">Cancel</button>
     </form>
 </div>
 
 <script>
-function openEditModal(id, name) {
+function openEditModal(id, name, price) {
     document.getElementById('edit_product_id').value = id;
     document.getElementById('edit_name').value = name;
+    document.getElementById('edit_price').value = price;
     document.getElementById('editModal').style.display = 'block';
 }
 function closeEditModal() {

@@ -36,21 +36,39 @@ def products():
 
 # Add new product
 @app.route('/products/add', methods=['POST'])
+
 def add_product():
     product_id = request.form['product_id']
-    name = request.form['name']
-    cursor.execute("INSERT INTO products (product_id, name) VALUES (%s, %s)", (product_id, name))
+    name = request.form['name'].strip()
+    price = request.form['price']
+
+    # Check for duplicate product name
+    cursor.execute("SELECT * FROM products WHERE name = %s", (name,))
+    existing_product = cursor.fetchone()
+
+    if existing_product:
+        # return "Product name already exists. Please choose a different name."
+        return redirect(url_for('products'))
+
+    # Insert new product if name is unique
+    cursor.execute("INSERT INTO products (product_id, name, Price) VALUES (%s, %s, %s)", (product_id, name, price))
     db.commit()
     return redirect(url_for('products'))
+
 
 # Edit existing product
 @app.route('/products/edit', methods=['POST'])
 def edit_product():
     product_id = request.form['product_id']
     name = request.form['name']
-    cursor.execute("UPDATE products SET name = %s WHERE product_id = %s", (name, product_id))
+    Price = request.form['price']  # lowercase and consistent
+
+    # Update both name and price in the database
+    cursor.execute("UPDATE products SET name = %s, price = %s WHERE product_id = %s", (name, Price, product_id))
     db.commit()
+
     return redirect(url_for('products'))
+
 
 
 # ========================== Locations ==========================
