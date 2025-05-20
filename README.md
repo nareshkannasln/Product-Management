@@ -81,18 +81,25 @@ flask run
 * **Add Product:** Add new products with name, description, and quantity.
 * **Update Product:** Edit details of an existing product.
 * **View Products:** List all products in the inventory.
+![Screenshot 2025-05-06 172347](https://github.com/user-attachments/assets/0ef414c2-13d9-49e2-b717-795c86050323)
 
 ### Location Management
 
 * **Add Location:** Add new product locations.
 * **Update Location:** Modify existing location details.
 * **View Locations:** View all locations.
+![Screenshot 2025-05-06 172403](https://github.com/user-attachments/assets/8ec33dbe-8082-4215-b1fe-9b15c6979b64)
 
 ### Product Movement
 
 * **Add Movement:** Track when products are moved between locations.
 * **Update Movement:** Update movement details (e.g., quantity moved).
 * **View Movements:** View all product movements.
+![Screenshot 2025-05-06 172419](https://github.com/user-attachments/assets/72cc546c-d84b-4666-8a6f-ee948fa28fd1)
+
+### Report
+![Screenshot 2025-05-06 172433](https://github.com/user-attachments/assets/6580e44d-b8f9-4095-b365-b96288690a45)
+
 
 ## Future Improvements
 
