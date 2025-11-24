@@ -75,6 +75,7 @@ flask run
   * `report.htmk` : Page for shows the rport of product.
 * `static/`: Directory containing static files like CSS 
 * 
+<img width="1920" height="1080" alt="After" src="https://github.com/user-attachments/assets/7724aa43-765f-412a-a97d-0f1acfb99dec" />
 
 ### Product Management
 
