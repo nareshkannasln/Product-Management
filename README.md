@@ -113,3 +113,11 @@ flask run
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
+
+
+
+
+
+
+<img width="1920" height="1080" alt="attendance" src="https://github.com/user-attachments/assets/5d054505-9b0a-4199-833e-9fb169003fb5" />
+
